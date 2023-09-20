@@ -16,6 +16,7 @@ pub fn start_http_server()
     for stream in listener.incoming() {
         let stream = stream.unwrap();
 
+        // TODO: Create a custom threadpool. cause why not?
         thread::spawn(|| {
             handle_connection(stream);
         });
