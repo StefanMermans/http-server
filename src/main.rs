@@ -6,6 +6,7 @@ use crate::http::response::Response;
 use crate::http::server::start_http_server;
 
 mod http;
+mod thread_pool;
 
 fn main() {
     start_http_server();
@@ -13,7 +14,7 @@ fn main() {
 
 pub fn match_request(request: &mut Request) -> Vec<u8>
 {
-    println!("Request: {:#?}", request);
+    // println!("Request: {:#?}", request);
 
     match request.path.as_str() {
         "/" => FileResponse::ok("public/index.html".to_string()).to_response_data_bytes(),

@@ -3,11 +3,13 @@ use std::net::{TcpListener, TcpStream};
 use std::thread;
 use crate::http::parse::parse_http_stream;
 use crate::match_request;
+use crate::thread_pool::ThreadPool;
 
 const ADDRESS: &str = "127.0.0.1:7878";
 
 pub fn start_http_server()
 {
+    let pool = ThreadPool::new(4);
     let listener = TcpListener::bind(ADDRESS).expect("Failed to bind http server");
     println!("Server started!");
     println!("Listening on: http://{}", ADDRESS);
@@ -16,9 +18,8 @@ pub fn start_http_server()
     for stream in listener.incoming() {
         let stream = stream.unwrap();
 
-        // TODO: Create a custom threadpool. cause why not?
-        thread::spawn(|| {
-            handle_connection(stream);
+        pool.execute(|| {
+            handle_connection(stream)
         });
     }
 }
