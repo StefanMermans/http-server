@@ -1,6 +1,5 @@
 use std::io::{Write};
 use std::net::{TcpListener, TcpStream};
-use std::thread;
 use crate::http::parse::parse_http_stream;
 use crate::match_request;
 use crate::thread_pool::ThreadPool;

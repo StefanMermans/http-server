@@ -17,10 +17,7 @@ impl FileResponse {
     }
 
     pub fn ok(filename: String) -> Self {
-        Self {
-            status: Status::Ok200,
-            filename,
-        }
+        Self::new(Status::Ok200, filename)
     }
 
     fn read_file(&self) -> io::Result<String> {

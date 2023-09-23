@@ -28,7 +28,7 @@ impl DataResponse {
         DataResponse::new(Status::Ok200, headers, content)
     }
 
-    pub fn notFound(headers: HashMap<String, String>, content: Option<String>) -> Self {
+    pub fn not_found(headers: HashMap<String, String>, content: Option<String>) -> Self {
         DataResponse::new(Status::NotFound404, headers, content)
     }
 
