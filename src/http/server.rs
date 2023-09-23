@@ -15,7 +15,7 @@ pub fn start_http_server()
     println!("Listening on: http://{}", ADDRESS);
 
 
-    for stream in listener.incoming() {
+    for stream in listener.incoming().take(2) {
         let stream = stream.unwrap();
 
         pool.execute(|| {

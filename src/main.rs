@@ -10,6 +10,8 @@ mod thread_pool;
 
 fn main() {
     start_http_server();
+
+    println!("Shutting down...")
 }
 
 pub fn match_request(request: &mut Request) -> Vec<u8>
@@ -23,7 +25,6 @@ pub fn match_request(request: &mut Request) -> Vec<u8>
             FileResponse::ok("public/index.html".to_string()).to_response_data_bytes()
         },
         _ => FileResponse::ok("public/404.html".to_string()).to_response_data_bytes(),
-
     }
 }
 
