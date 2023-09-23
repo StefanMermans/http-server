@@ -1,11 +1,11 @@
 use std::thread;
 use std::time::Duration;
-use crate::http::request::Request;
-use crate::http::response::file_response::FileResponse;
-use crate::http::response::Response;
-use crate::http::server::start_http_server;
+use crate::http_server::request::Request;
+use crate::http_server::response::file_response::FileResponse;
+use crate::http_server::response::Response;
+use crate::http_server::server::start_http_server;
 
-mod http;
+mod http_server;
 mod thread_pool;
 
 fn main() {

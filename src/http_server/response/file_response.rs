@@ -1,7 +1,7 @@
 use std::{fs, io};
 use std::collections::HashMap;
-use crate::http::response::Response;
-use crate::http::status::Status;
+use crate::http_server::response::Response;
+use crate::http_server::status::Status;
 
 pub struct FileResponse {
     status: Status,

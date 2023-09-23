@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use crate::http::status::Status;
+use crate::http_server::status::Status;
 
 pub mod data_response;
 pub mod file_response;

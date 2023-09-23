@@ -1,6 +1,6 @@
 use std::io::{BufRead, BufReader, Read};
 use std::net::{TcpStream};
-use crate::http::request::Request;
+use crate::http_server::request::Request;
 
 pub fn parse_http_stream(mut stream: &TcpStream) -> Request {
     let mut buf_reader = BufReader::new(&mut stream);
