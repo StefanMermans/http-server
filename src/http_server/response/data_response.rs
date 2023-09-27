@@ -20,6 +20,14 @@ impl DataResponse {
         response
     }
 
+    pub fn json(content: String) -> Self {
+        DataResponse::new(
+            Status::Ok200,
+            HashMap::from([("Content-Type".to_string(), "application/json".to_string())]),
+            Some(content),
+        )
+    }
+
     pub fn default() -> Self {
         DataResponse::new(Status::Ok200, HashMap::new(), None)
     }
@@ -32,7 +40,7 @@ impl DataResponse {
         DataResponse::new(Status::NotFound404, headers, content)
     }
 
-    pub fn set_content(&mut self, content: Option<String>)  {
+    pub fn set_content(&mut self, content: Option<String>) {
         if let Some(data) = content {
             self.headers.insert("Content-Length".to_string(), data.len().to_string());
             self.content = Some(data);

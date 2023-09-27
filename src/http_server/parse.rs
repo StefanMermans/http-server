@@ -1,5 +1,6 @@
 use std::io::{BufRead, BufReader, Read};
 use std::net::{TcpStream};
+use crate::http_server::method::Method;
 use crate::http_server::request::Request;
 
 pub fn parse_http_stream(mut stream: &TcpStream) -> Request {
@@ -38,7 +39,13 @@ fn parse_status_line(status_line: &String, request: &mut Request) {
         panic!("Status line is invalid \"{}\"", &status_line);
     }
 
-    request.method = split[0].to_string();
+    let method: Result<Method, ()> = split[0].to_string().parse();
+    // TODO: what if the method is not in our enum?
+    match method {
+        Ok(method) => request.method = method,
+        Err(_) => {}
+    }
+
     request.path = split[1].to_string();
     request.protocol = split[2].to_string();
 }

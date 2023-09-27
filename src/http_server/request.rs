@@ -1,9 +1,10 @@
 use std::collections::HashMap;
+use crate::http_server::method::Method;
 
 #[derive(Debug)]
 pub struct Request {
     pub protocol: String,
-    pub method: String,
+    pub method: Method,
     pub path: String,
     pub headers: HashMap<String, String>,
     pub content: Option<Vec<u8>>,
@@ -13,7 +14,7 @@ pub struct Request {
 impl Request {
     pub fn new() -> Self {
         Self {
-            method: String::new(),
+            method: Method::GET,
             path: "".to_string(),
             protocol: "".to_string(),
             headers: HashMap::new(),

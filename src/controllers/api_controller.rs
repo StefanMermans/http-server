@@ -23,4 +23,8 @@ impl Controller for ApiController {
             Some("{\"foo\":\"bar\"}".to_string())
         ))
     }
+
+    fn path(&self) -> String {
+        "/api/test".to_string()
+    }
 }

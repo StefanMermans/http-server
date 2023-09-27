@@ -26,4 +26,8 @@ impl Controller for FileController {
 
         Box::new(FileResponse::ok(file_path))
     }
+
+    fn path(&self) -> String {
+        "/api/file".to_string()
+    }
 }
