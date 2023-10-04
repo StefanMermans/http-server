@@ -22,11 +22,14 @@ pub fn start_http_server(routes: Arc<ControllerList>)
         let thread_routes = Arc::clone(&routes);
 
         pool.execute(move || {
-            let request = parse_http_stream(&stream);
+            let mut request = parse_http_stream(&stream);
 
             let response: Box<dyn Response> = match thread_routes.get(&request.method, &request.path) {
                 None => NotFoundController::new().handle(&request),
-                Some(controller) => controller.handle(&request),
+                Some((parameters, controller)) => {
+                    request.parameters = parameters;
+                    controller.handle(&request)
+                },
             };
 
             stream.write_all(response.to_response_data_bytes().as_slice()).expect("Failed to send response!");

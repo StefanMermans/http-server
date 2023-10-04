@@ -7,6 +7,7 @@ pub mod controller_list;
 pub mod not_found_controller;
 pub mod get_character_controller;
 pub mod character_index_controller;
+pub mod param_controller;
 
 pub trait Controller {
     fn handle(&self, request: &Request) -> Box<dyn Response>;

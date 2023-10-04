@@ -9,6 +9,7 @@ pub struct Request {
     pub headers: HashMap<String, String>,
     pub content: Option<Vec<u8>>,
     pub content_length: usize,
+    pub parameters: HashMap<String, String>,
 }
 
 impl Request {
@@ -20,6 +21,7 @@ impl Request {
             headers: HashMap::new(),
             content: None,
             content_length: 0,
+            parameters: HashMap::new(),
         }
     }
 }

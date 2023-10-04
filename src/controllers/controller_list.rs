@@ -29,7 +29,7 @@ impl ControllerList {
         }
     }
 
-    pub fn get(&self, method: &Method, path: &String) -> Option<&Box<dyn Controller + Sync + Send>> {
+    pub fn get(&self, method: &Method, path: &String) -> Option<(HashMap<String, String>, &Box<dyn Controller + Sync + Send>)> {
         let controllers = match self.method_map.get(method) {
             None => return None,
             Some(controllers) => controllers
@@ -38,19 +38,22 @@ impl ControllerList {
         let path_sections = path.trim_start_matches("/").split("/").collect::<Vec<&str>>();
 
         for controller in controllers {
-            if let Some(matching_controller) = controller_matches(&path_sections, controller) {
-                return Some(matching_controller);
+            if let Some(result) = controller_matches(&path_sections, controller) {
+                return Some(result);
             }
         }
 
         None
     }
-
 }
 
-fn controller_matches<'a>(path_sections: &Vec<&str>, controller: &'a Box<dyn Controller + Send + Sync>) -> Option<&'a Box<dyn Controller + Send + Sync>> {
+
+
+fn controller_matches<'a>(path_sections: &Vec<&str>, controller: &'a Box<dyn Controller + Send + Sync>) -> Option<(HashMap<String, String>, &'a Box<dyn Controller + Send + Sync>)> {
     let controller_path = controller.path();
     let controller_sections = controller_path.trim_start_matches("/").split("/").collect::<Vec<&str>>();
+
+    let mut parameters: HashMap<String, String> = HashMap::new();
 
     if path_sections.len() != controller_sections.len() {
         return None;
@@ -59,12 +62,20 @@ fn controller_matches<'a>(path_sections: &Vec<&str>, controller: &'a Box<dyn Con
     for (index, path_section) in path_sections.iter().enumerate() {
         let controller_section = controller_sections[index];
 
+        if is_parameter(controller_section) {
+            &parameters.insert(controller_section[1..controller_section.len() - 1].to_string(), path_section.to_string());
+            continue;
+        }
+
         // TODO: parameter matching
         if *controller_section != **path_section {
             return None;
         }
     }
 
-    Some(controller)
+    Some((parameters, controller))
 }
 
+fn is_parameter(section: &str) -> bool {
+    section.starts_with('{') && section.ends_with('}')
+}

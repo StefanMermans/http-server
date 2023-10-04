@@ -14,6 +14,7 @@ use crate::controllers::Controller;
 use crate::controllers::controller_list::ControllerList;
 use crate::controllers::file_controller::FileController;
 use crate::controllers::get_character_controller::GetCharacterController;
+use crate::controllers::param_controller::ParamController;
 use crate::http_server::method::Method;
 use crate::http_server::response::file_response::FileResponse;
 
@@ -37,6 +38,8 @@ fn main() {
 
         (Method::GET, Box::new(CharacterIndexController::new())),
         (Method::GET, Box::new(GetCharacterController::new())),
+
+        (Method::GET, Box::new(ParamController::new())),
     ];
     let controller_list = ControllerList::from(controller_array);
 
